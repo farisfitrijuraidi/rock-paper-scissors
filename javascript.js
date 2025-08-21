@@ -26,7 +26,7 @@ function playGame() {
     let humanScore = 0 ;
     let computerScore = 0 ;
 
-    for(i = 0; i < 5; i++) {
+    for(let i = 0; i < 5; i++) {
         console.log(`Round ${i+1}`);
         const humanChoice = getHumanChoice() ;
         console.log(`You chose: ${humanChoice}`);
