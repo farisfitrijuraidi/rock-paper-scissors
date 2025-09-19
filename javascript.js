@@ -4,6 +4,11 @@ const result = document.querySelector('#result');
 const score = document.querySelector('#score');
 const announce = document.querySelector('#announce');
 const choiceButtons = document.querySelectorAll('#button button');
+const display = document.querySelector('#display');
+
+const playAgain = document.createElement('button');
+playAgain.textContent = 'Play Again?';
+playAgain.addEventListener('click', resetGame);
 
 // --- 2. DEFINE VARIABLES ---
 let humanScore = 0 ;
@@ -29,9 +34,18 @@ function playRound(humanChoice,computerChoice) {
         return 'human' ;
     }
 }
-    
-// --- 4. ADD EVENT LISTENERS ---
-div.addEventListener('click', (e) => {
+
+function resetGame() {
+    humanScore = 0 ;
+    computerScore = 0 ;
+    score.textContent = `YOU ${humanScore} : ${computerScore} COMPUTER`;
+    result.textContent = '';
+    announce.textContent = '';
+    choiceButtons.forEach(button => button.disabled = false);
+    playAgain.remove();
+}
+
+function handleGame(e) {
     let target = e.target;
     const roundWinner = playRound(target.id, getComputerChoice());
     if (roundWinner === 'human') {
@@ -47,5 +61,10 @@ div.addEventListener('click', (e) => {
             announce.textContent = 'Better luck next time!' ;
         }
         choiceButtons.forEach(button => button.disabled = true);
+        display.appendChild(playAgain);
+        
     } 
-});
+}
+    
+// --- 4. ADD EVENT LISTENERS ---
+div.addEventListener('click', handleGame);
