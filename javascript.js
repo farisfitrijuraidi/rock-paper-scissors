@@ -3,6 +3,7 @@ const div = document.querySelector('#button');
 const result = document.querySelector('#result');
 const score = document.querySelector('#score');
 const announce = document.querySelector('#announce');
+const choiceButtons = document.querySelectorAll('#button button');
 
 // --- 2. DEFINE VARIABLES ---
 let humanScore = 0 ;
@@ -39,9 +40,12 @@ div.addEventListener('click', (e) => {
         computerScore++ ;
     }
     score.textContent = `YOU ${humanScore} : ${computerScore} COMPUTER`;
-    if (humanScore === 5) {
-        announce.textContent = 'CONGRATULATIONS! YOU WON THE GAME!' ;
-    } else if (computerScore === 5) {
-        announce.textContent = 'Better luck next time!' ;
-    }
+    if (humanScore === 5 || computerScore === 5) {
+        if (humanScore === 5) {
+            announce.textContent = 'CONGRATULATIONS! YOU WON THE GAME!' ;
+        } else if (computerScore === 5) {
+            announce.textContent = 'Better luck next time!' ;
+        }
+        choiceButtons.forEach(button => button.disabled = true);
+    } 
 });
