@@ -53,4 +53,14 @@ function playGame() {
     
 }
 
-playGame() ;
+const body = document.querySelector('body');
+body.addEventListener('click', (e) => {
+    let target = e.target;
+    if (target.id === 'rock') {
+        playRound('rock', computerChoice);
+    } else if (target.id === 'paper') {
+        playRound('paper', computerChoice);
+    } else {
+        playRound('scissors', computerChoice);
+    }
+})
