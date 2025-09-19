@@ -1,66 +1,47 @@
+// --- 1. SELECT DOM ELEMENTS ---
+const div = document.querySelector('#button');
+const result = document.querySelector('#result');
+const score = document.querySelector('#score');
+const announce = document.querySelector('#announce');
+
+// --- 2. DEFINE VARIABLES ---
+let humanScore = 0 ;
+let computerScore = 0 ;
+score.textContent = `YOU ${humanScore} : ${computerScore} COMPUTER`;
+
+// --- 3. DEFINE FUNCTIONS ---
 function getComputerChoice() {
     let choices = ["rock", "paper", "scissors"]
     const number = Math.floor(Math.random()*choices.length) ;
     return choices[number] ;
 }
 
-function getHumanChoice() {
-    let userInput = prompt("Rock? Paper? Scissors? :", "") ;
-    return userInput.toLowerCase() ;
-}
-
 function playRound(humanChoice,computerChoice) {
     if (humanChoice === 'rock' && computerChoice === 'paper' || humanChoice === 'paper' && computerChoice === 'scissors' || humanChoice === 'scissors' && computerChoice === 'rock') {
-        console.log(`You Lose! ${computerChoice} beats ${humanChoice}!`) ;
+        result.textContent = `You Lose! ${computerChoice} beats ${humanChoice}!` ;
         return 'computer' ;
     } else if (humanChoice === computerChoice) {
-        console.log('DRAW!') ;
+        result.textContent = 'DRAW!' ;
         return 'DRAW' ;
     } else {
-        console.log(`You Win! ${humanChoice} beats ${computerChoice}`) ;
+        result.textContent = `You Win! ${humanChoice} beats ${computerChoice}` ;
         return 'human' ;
     }
 }
     
-function playGame() {
-    let humanScore = 0 ;
-    let computerScore = 0 ;
-
-    for(let i = 0; i < 5; i++) {
-        console.log(`Round ${i+1}`);
-        const humanChoice = getHumanChoice() ;
-        console.log(`You chose: ${humanChoice}`);
-        const computerChoice = getComputerChoice() ;
-        console.log(`Computer chose: ${computerChoice}`) ;
-
-        const roundWinner = playRound(humanChoice,computerChoice) ;
-        if (roundWinner === 'human') {
-            humanScore++ ;
-        } else if (roundWinner === 'computer') {
-            computerScore++ ;
-        }
-        console.log(humanScore,computerScore);
-    }
-    console.log('--FINAL SCORE--');
-    console.log(`You ${humanScore} : ${computerScore} Computer`);
-    if (humanScore > computerScore) {
-        console.log('CONGRATULATIONS! YOU WON THE GAME!')
-    } else if (computerScore > humanScore) {
-        console.log('Better luck next time!')
-    } else {
-        console.log("It's a Tie!")
-    }
-    
-}
-
-const body = document.querySelector('body');
-body.addEventListener('click', (e) => {
+// --- 4. ADD EVENT LISTENERS ---
+div.addEventListener('click', (e) => {
     let target = e.target;
-    if (target.id === 'rock') {
-        playRound('rock', computerChoice);
-    } else if (target.id === 'paper') {
-        playRound('paper', computerChoice);
-    } else {
-        playRound('scissors', computerChoice);
+    const roundWinner = playRound(target.id, getComputerChoice());
+    if (roundWinner === 'human') {
+        humanScore++ ;
+    } else if (roundWinner === 'computer') {
+        computerScore++ ;
     }
-})
+    score.textContent = `YOU ${humanScore} : ${computerScore} COMPUTER`;
+    if (humanScore === 5) {
+        announce.textContent = 'CONGRATULATIONS! YOU WON THE GAME!' ;
+    } else if (computerScore === 5) {
+        announce.textContent = 'Better luck next time!' ;
+    }
+});
